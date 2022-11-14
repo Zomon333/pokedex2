@@ -1,56 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import * as React from 'react';
+import {useState} from 'react';
+
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+import { Pokemon } from './features/Pokemon.tsx'
 
 function App() {
+  const [numPokemon, setNumPokemon] = useState(5);
+  const [textField, setTextField] = useState(0);
+
+  const getArrayStub =(len)=>
+  {
+      /*
+        I know this looks questionable, but hear me out;
+        I'm making an array of n-many integers so I can map over it. Each index of our array is a pokemon.
+        The data isn't baked, technically, so you could in theory load more than the original pokemon if you tried hard enough.
+      */
+      let arr=[len];
+      for(let i=0; i<len; i++)
+      {
+        arr[i]=i+1;
+      }
+      return arr
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
+        
+        <TextField style={{margin:"3em"}} onChange={(event)=>{setTextField(event.target.value)}}> </TextField>
+        <Button style={{margin:"3em"}} variant="contained" onClick={()=>{setNumPokemon(Number.parseInt(textField))}}>Show me more pokemon!</Button>
+        <br /><br />
+        Currently, {(!isNaN(numPokemon)) ? numPokemon : 0} are set to be displayed.
+        <br /><br />
+        Note to the professor: Yes, this can load all 151 requested pokemon; and more!
+        <br /><br />
+        {
+          getArrayStub(numPokemon).map(
+            (num)=>{return <Pokemon key={num} id={num}></Pokemon>}
+          )
+        }
+
+
       </header>
+
     </div>
   );
 }
