@@ -1,46 +1,18 @@
-# Getting Started with Create React App and Redux
+# Readme!
+We need a readme for this project!
+"Did you include a README.md with explanations of your approach?"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+### My Approach
+For this project, I evaluated the task at hand and the most logical apparent data structure was. We often find ourselves needing to share state between numerous objects for communication; often in a structure that is not vertical! With this application, it is similar.
 
-## Available Scripts
+State management libraries like Redux offer solutions of "stores"-- which allow us to raise our state outside of our components. This makes sense for some things, like some of the data in my application. There are, however, better uses.
 
-In the project directory, you can run:
+I chose that instead of raising the state outside of my components and making them all share a global store, it would make more sense to raise the API calls into the global store and implement an interface for the components to interact with. This is what I did.
 
-### `npm start`
+I made pokemonApi, found in Pokemon.tsx, which provides the components with a query to get a pokemon by ID. I then implemented a Pokemon component capable of organizing it's data around a central ID passed to it as a prop. The pokemon component then uses the API to query it's relevant information upon update, and stores it so it does not need to reload it. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The Pokemon component then divides it's backed up data between it's children components; a component to display Statistics, one for Type information, one for Abilities, one for control of the sprites and a sprite display module. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+In the final version, the Pokemon component organizes it's children components in order to create a finalized entry to display. This allows our API to fetch any pokemon at runtime, given its ID.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Our app component has some boilerplate to manage the number of Pokemon being showed at any given time. This is, of course, so that we don't load *everything at once*-- and so it's a bit more flexible.
